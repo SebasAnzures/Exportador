@@ -31,6 +31,7 @@
             gd = new DataGridView();
             btMostrar = new Button();
             btExport = new Button();
+            btImportar = new Button();
             ((System.ComponentModel.ISupportInitialize)gd).BeginInit();
             SuspendLayout();
             // 
@@ -60,12 +61,24 @@
             btExport.TabIndex = 2;
             btExport.Text = "Exportar";
             btExport.UseVisualStyleBackColor = true;
+            btExport.Click += btExport_Click;
+            // 
+            // btImportar
+            // 
+            btImportar.Location = new Point(271, 373);
+            btImportar.Name = "btImportar";
+            btImportar.Size = new Size(75, 23);
+            btImportar.TabIndex = 3;
+            btImportar.Text = "Importar";
+            btImportar.UseVisualStyleBackColor = true;
+            btImportar.Click += btImportar_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btImportar);
             Controls.Add(btExport);
             Controls.Add(btMostrar);
             Controls.Add(gd);
@@ -80,5 +93,6 @@
         private DataGridView gd;
         private Button btMostrar;
         private Button btExport;
+        private Button btImportar;
     }
 }

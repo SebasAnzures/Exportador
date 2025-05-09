@@ -14,5 +14,16 @@ namespace Exportador
         {
             gd.DataSource = acc.ObtenerEmpDep();
         }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            acc.ExportarAExcel(acc.ObtenerEmpDep());
+        }
+
+        private void btImportar_Click(object sender, EventArgs e)
+        {
+            acc.ImportarDesdeExcel();
+            gd.DataSource = acc.ObtenerEmpDep();
+        }
     }
 }
