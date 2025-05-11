@@ -116,23 +116,32 @@ inner join Departamentos d on e.iddepartamento = d.id";
                     {
                         for (int i = 0; i < Insertar.Count; i++)
                         {
-                            string query = "insert into empleados (nombre, edad) values (@NombreEmp, @Edad)";
-
-                            SqlCommand cmd = new SqlCommand(query, conn);
-                            cmd.Parameters.AddWithValue("@NombreEmp", Insertar[i].NombreEmp);
-                            cmd.Parameters.AddWithValue("@Edad", Convert.ToInt32(Insertar[i].Edad));
-
-
                             conn.Open();
-                            cmd.ExecuteNonQuery();
+                            int result = GetDepartmentId(Insertar[i].NombreDep, conn);
+                            if (result == 0)
+                            {
+                                string query = "insert into Departamentos (nombre) values (@NombreDep)";
+
+                                SqlCommand cmd = new SqlCommand(query, conn);
+                                cmd.Parameters.AddWithValue("@NombreDep", Insertar[i].NombreDep);
+
+
+
+
+                                cmd.ExecuteNonQuery();
+                            }
+
                         }
 
                         for (int i = 0; i < Insertar.Count; i++)
                         {
-                            string query = "insert into Departamentos (nombre) values (@NombreDep)";
+                            int result = GetDepartmentId(Insertar[i].NombreDep, conn);
+                            string query = "insert into Empleados (nombre, edad, iddepartamento) values (@NombreEmp, @Edad, @Result)";
 
                             SqlCommand cmd = new SqlCommand(query, conn);
-                            cmd.Parameters.AddWithValue("@NombreDep", Insertar[i].NombreDep);
+                            cmd.Parameters.AddWithValue("@NombreEmp", Insertar[i].NombreEmp);
+                            cmd.Parameters.AddWithValue("@Edad", Insertar[i].Edad);
+                            cmd.Parameters.AddWithValue("@Result", result);
                             
 
 
@@ -147,6 +156,23 @@ inner join Departamentos d on e.iddepartamento = d.id";
             }
 
             return Insertar;
+        }
+        private int GetDepartmentId(string departmentName, SqlConnection conn)
+        {
+            string query = "SELECT id FROM Departamentos WHERE nombre = @NombreDep";
+            
+            
+                
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@NombreDep", departmentName);
+                
+                    return (int)cmd.ExecuteScalar();
+                    
+                    
+                }
+                
+            
         }
     }
 }
